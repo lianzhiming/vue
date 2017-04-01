@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <script src="https://unpkg.com/vue/dist/vue.js"></script>
+</head>
+<body>
+<script>
+    var vm=new Vue({
+        data:{
+            a:1
+        },
+        created:function(){
+            // `this` 指向 vm 实例
+            console.log('a is: '+this.a)// -> "a is: 1"
+        }
+    })
+</script>
+</body>
+</html>

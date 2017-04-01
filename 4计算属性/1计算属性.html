@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <script src="https://unpkg.com/vue/dist/vue.js"></script>
+</head>
+<body>
+    <h3>计算属性</h3>
+    <h5>模板内的表达式是非常便利的，但是它们实际上只用于简单的运算。在模板中放入太多的逻辑会让模板过重且难以维护。例如：</h5>
+    <div id="example">
+        {{ message.split('').reverse().join('') }}
+    </div>
+    <h5>
+        在这种情况下，模板不再简单和清晰。在意识到这是反向显示 message 之前，你不得不再次确认第二遍。当你想要在模板中多次反向显示 message 的时候，问题会变得更糟糕。
+        这就是对于任何复杂逻辑，你都应当使用计算属性的原因。
+    </h5>
+
+    <h3>基础例子</h3>
+    <div id="example1">
+        <p>Original message: "{{ message }}"</p>
+        <p>Computed reversed message: "{{ reversedMessage }}"</p>
+    </div>
+    <script>
+        var vm=new Vue({
+            el:'#example1',
+            data:{
+                message:'Hello'
+            },
+            computed:{
+                reversedMessage:function(){
+                    return this.message.split('').reverse().join('')
+                }
+            }
+        })
+        console.log(vm.reversedMessage) // -> 'olleH'
+        vm.message = 'Goodbye'
+        console.log(vm.reversedMessage) // -> 'eybdooG'
+    </script>
+
+    <h3>计算缓存 vs Methods
+        Computed 属性 vs Watched 属性
+        计算 setter  <span style="color:#f00">看教程</span></h3>
+
+</body>
+</html>

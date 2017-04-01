@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <script src="https://unpkg.com/vue/dist/vue.js"></script>
+</head>
+<body>
+    <h3>v-text</h3>
+    <div id="lian1">
+        <p v-text="msg"></p>
+        <p>{{msg}}</p>
+    </div>
+    <script>
+        new Vue({
+            el:'#lian1',
+            data:{
+                msg:234567
+            }
+        })
+    </script>
+
+    <h3>v-html</h3>
+    <div id="lian2">
+        <p v-html="msg"></p>
+    </div>
+    <script>
+        new Vue({
+            el:'#lian2',
+            data:{
+                msg:'<p>你好</p><p>世界</p>'
+            }
+        })
+    </script>
+
+    <h3>v-show</h3>
+    <div id="lian3">
+        <p v-show="msg">显示与隐藏</p>
+        <p v-show="!msg">显示与隐藏</p>
+    </div>
+    <script>
+        new Vue({
+            el:"#lian3",
+            data:{
+                msg:false
+            }
+        })
+    </script>
+
+    <h3>v-if</h3>
+    <div id="lian4">
+        <p v-if="msg">显示与隐藏 -- v-if</p>
+        <p v-else>显示与隐藏</p>
+        <h5>分割</h5>
+        <template v-if="msg">
+            显示与隐藏 -- v-if
+            <p>lallalalal</p>
+            <p>1111111111111111</p>
+        </template>
+    </div>
+    <script>
+        var app4=new Vue({
+            el:'#lian4',
+            data:{
+                msg:true
+            }
+        })
+    </script>
+</body>
+</html>

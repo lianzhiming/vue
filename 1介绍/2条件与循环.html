@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <script src="https://unpkg.com/vue/dist/vue.js"></script>
+</head>
+<body>
+    <div id="app-3">
+        <p v-if="seen">现在你看到我了</p>
+    </div>
+    <script>
+        var app3=new Vue({
+            el:'#app-3',
+            data:{
+                seen:true
+            }
+        })
+    </script>
+
+    <h3>还有其它很多指令，每个都有特殊的功能。例如，v-for 指令可以绑定数组的数据来渲染一个项目列表：</h3>
+    <div id="app-4">
+        <ol>
+            <li v-for="todo in todos">
+                {{todo.text}}
+            </li>
+        </ol>
+    </div>
+    <script>
+        var app4=new Vue({
+            el:'#app-4',
+            data:{
+                todos:[
+                    { text: '学习 JavaScript' },
+                    { text: '学习 Vue' },
+                    { text: '整个牛项目' }
+                ]
+            }
+        })
+    </script>
+</body>
+</html>

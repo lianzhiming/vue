@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <script src="https://unpkg.com/vue/dist/vue.js"></script>
+</head>
+<body>
+    <h3>监听事件</h3>
+    <div id="example-1">
+        <button v-on:click="counter+=1">增加1</button>
+        <p>这个按钮被点击了{{counter}}次</p>
+    </div>
+    <script>
+        new Vue({
+            el:'#example-1',
+            data:{
+                counter:0
+            }
+        })
+    </script>
+
+    <h3>方法事件处理器</h3>
+    <div id="example-2">
+        <button v-on:click="greet">Greet</button>
+    </div>
+    <script>
+        var example2=new Vue({
+            el:'#example-2',
+            data:{
+                name:'Vue.js'
+            },
+            methods:{
+                greet: function (e) {
+                    alert('Hello '+this.name+'!')
+                    alert(e.target.tagName)
+                }
+            }
+        })
+    </script>
+
+    <h3>内联处理器方法</h3>
+    <div id="example-3">
+        <button v-on:click="say('hi')">Say hi</button>
+        <button v-on:click="say('what')">Say what</button>
+    </div>
+    <script>
+        new Vue({
+            el:'#example-3',
+            methods:{
+                say: function (msg) {
+                    alert(msg)
+                }
+            }
+        })
+    </script>
+</body>
+</html>

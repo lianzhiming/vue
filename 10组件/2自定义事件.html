@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <script src="https://unpkg.com/vue/dist/vue.js"></script>
+    <script src="https://cdn.rawgit.com/chrisvfritz/5f0a639590d6e648933416f90ba7ae4e/raw/98739fb8ac6779cb2da11aaa9ab6032e52f3be00/currency-validator.js"></script>
+</head>
+<body>
+    <h3>使用 v-on 绑定自定义事件</h3>
+    <div id="lian1">
+        <p>{{total}}</p>
+        <button-counter v-on:increment="incrementTotal"></button-counter>
+        <button-counter v-on:increment="incrementTotal"></button-counter>
+    </div>
+    <script>
+        Vue.component('button-counter',{
+            template:'<button v-on:click="increment">{{counter}}</button>',
+            data: function () {
+                return{
+                    counter:0
+                }
+            },
+            methods:{
+                increment: function () {
+                    this.counter+=1;
+                    this.$emit('increment')
+                }
+            }
+        })
+
+        new Vue({
+            el:'#lian1',
+            data:{
+                total:0
+            },
+            methods:{
+                incrementTotal:function(){
+                    this.total+=1;
+                }
+            }
+        })
+    </script>
+
+    <h3>使用自定义事件的表单输入组件</h3>
+    <div id="app">
+        <currency-input
+                label="价格"
+                v-model="price"
+                ></currency-input>
+        <currency-input
+                label="航运"
+                v-model="shipping"
+                ></currency-input>
+        <currency-input
+                label="处理"
+                v-model="handling"
+                ></currency-input>
+        <currency-input
+                label="折扣"
+                v-model="discount"
+                ></currency-input>
+
+        <p>Total: ${{ total }}</p>
+    </div>
+    <script>
+        Vue.component('currency-input', {
+            template: '\
+                    <div>\
+                          <label v-if="label">{{ label }}</label>\
+                            $\
+                          <input\
+                            ref="input"\
+                            v-bind:value="value"\
+                            v-on:input="updateValue($event.target.value)"\
+                            v-on:focus="selectAll"\
+                            v-on:blur="formatValue"\
+                          >\
+                    </div>\
+                    ',
+            props: {
+                value: {
+                    type: Number,
+                    default: 0
+                },
+                label: {
+                    type: String,
+                    default: ''
+                }
+            },
+            mounted: function () {
+                this.formatValue()
+            },
+            methods: {
+                updateValue: function (value) {
+                    var result = currencyValidator.parse(value, this.value)
+                    if (result.warning) {
+                        this.$refs.input.value = result.value
+                    }
+                    this.$emit('input', result.value)
+                },
+                formatValue: function () {
+                    this.$refs.input.value = currencyValidator.format(this.value)
+                },
+                selectAll: function (event) {
+                    // Workaround for Safari bug
+                    // http://stackoverflow.com/questions/1269722/selecting-text-on-focus-using-jquery-not-working-in-safari-and-chrome
+                    setTimeout(function () {
+                        event.target.select()
+                    }, 0)
+                }
+            }
+        })
+
+        new Vue({
+            el: '#app',
+            data: {
+                price: 0,
+                shipping: 0,
+                handling: 0,
+                discount: 0
+            },
+            computed: {
+                total: function () {
+                    return ((
+                    this.price * 100 +
+                    this.shipping * 100 +
+                    this.handling * 100 -
+                    this.discount * 100
+                    ) / 100).toFixed(2)
+                }
+            }
+        })
+    </script>
+</body>
+</html>
